@@ -1,0 +1,28 @@
+import time
+from datetime import datetime
+from email.utils import format_datetime
+from os import fsdecode
+import requests
+from selenium import webdriver
+from selenium.webdriver import ActionChains, Keys
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.wait import WebDriverWait
+from webdriver_manager.chrome import ChromeDriverManager
+ops=webdriver.ChromeOptions()
+ops.add_argument("--start-maximized")
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),options=ops)
+driver.get("https://automationtesting.co.uk/index.html")
+time.sleep(2)
+driver.find_element(By.CSS_SELECTOR,".toggle").click()
+time.sleep(2)
+driver.find_element(By.XPATH,"//a[text()='Loader']").click()
+time.sleep(2)
+tit=driver.current_url
+print(tit)
+my_wait=WebDriverWait(driver,7)
+button=my_wait.until(EC.element_to_be_clickable((By.XPATH,"//button[@id='loaderBtn']")))
+button.click()
+time.sleep(5)
